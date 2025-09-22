@@ -1,104 +1,322 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #2563EB; /* blue */
+  --secondary: #F59E0B; /* amber */
+  --bg: #f9fafb;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --error: #EF4444;
+  --ring: rgba(37, 99, 235, 0.25);
+  --shadow: 0 10px 20px rgba(17,24,39,0.08);
+  --radius: 12px;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-shell {
+  display: grid;
+  grid-template-rows: 64px 1fr 44px;
+  height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.topbar {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, rgba(37,99,235,0.9), rgba(37,99,235,0.75));
+  color: white;
+  padding: 0 20px;
+  box-shadow: var(--shadow);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.brand-badge {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+  height: 34px;
+  width: 34px;
+  border-radius: 10px;
+  background: var(--secondary);
+  color: #1f2937;
+  font-weight: 800;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  appearance: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .05s ease, box-shadow .2s ease, background .2s ease;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--secondary);
+  color: #1f2937;
+}
+.btn-outline {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.sidebar {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.panel {
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  padding: 12px;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+.panel h3 {
+  margin: 0 0 10px 0;
   font-size: 14px;
+  color: #374151;
+  letter-spacing: .3px;
+}
+
+.upload-drop {
+  border: 2px dashed #c7d2fe;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  color: #374151;
+  background: linear-gradient(180deg, rgba(37,99,235,0.04), rgba(255,255,255,0.8));
+}
+.upload-drop input { display: none; }
+.upload-drop .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+.content {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 14px;
+  min-height: 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.search {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+}
+.search input {
+  flex: 1;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+  transition: box-shadow .2s ease, border .2s ease;
+}
+.search input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  overflow: auto;
+  padding-bottom: 8px;
+}
+
+.card {
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  display: grid;
+  grid-template-rows: 160px auto;
+}
+
+.card .thumb {
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.card .thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.meta {
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+.meta .title {
+  font-size: 14px;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.meta .status {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #dbeafe;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 20px;
+  color: #374151;
+  font-size: 12px;
+}
+
+.badge {
+  background: #fff7ed;
+  color: #7c2d12;
+  border: 1px solid #fed7aa;
+  padding: 4px 8px;
+  border-radius: 999px;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+/* Preview Drawer */
+.preview {
+  position: fixed;
+  right: 20px;
+  bottom: 60px;
+  top: 84px;
+  width: min(480px, calc(100% - 40px));
+  background: white;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  border: 1px solid #eef2f7;
+  border-radius: 16px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+}
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid #eef2f7;
+}
+.preview-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 12px;
+  overflow: auto;
+  background: linear-gradient(180deg, #f9fafb, #ffffff);
+}
+.preview-col {
+  background: white;
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.preview-col h4 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border-bottom: 1px solid #eef2f7;
+}
+.preview-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+.preview-image img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.preview-footer {
+  padding: 10px;
+  border-top: 1px solid #eef2f7;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+@media (max-width: 1024px) {
+  .layout { grid-template-columns: 1fr; }
+  .preview { position: fixed; left: 20px; width: calc(100% - 40px); }
 }
