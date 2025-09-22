@@ -87,3 +87,26 @@
    const text = await res.text();
    throw new Error(`Delete failed (${res.status}): ${text}`);
  }
+
+ // PUBLIC_INTERFACE
+ export async function editImage(imageId, operation, params = {}, output_format = null) {
+   /** Apply an edit operation synchronously and return updated ImageMeta. */
+   const body = { operation, params };
+   if (output_format) body.output_format = output_format;
+   const res = await fetch(url(`/api/images/${imageId}/edit`), {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(body),
+   });
+   if (!res.ok) {
+     const text = await res.text();
+     throw new Error(`Edit failed (${res.status}): ${text}`);
+   }
+   return res.json();
+ }
+
+ // PUBLIC_INTERFACE
+ export function getEditedUrl(imageId) {
+   /** Get URL for the last edited image content (for <img src=...>). */
+   return url(`/api/images/${imageId}/edited`);
+ }
